@@ -5,16 +5,23 @@ use Slim\Factory\AppFactory;
 
 require __DIR__ . '/../REST API/vendor/autoload.php';
 
-
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
+
+$app->get('/', function (Request $request, Response $response) {
+    $response->getBody()->write("work");
+
+    return $response;
+});
 
 $app->get('/user', function (Request $request, Response $response) {
     $response->getBody()->write("Саламалеку малек шалям кутакбасс");
     return $response;
 });
-$app->post('/user/{id}', function (Request $request, Response $response, array $args) {
-    $data = $args['id'];
+$app->post('/user/{id}', function (Request $request, Response $response) {
+    $id = $request->getQueryParams();
+    $userId = $id['id'];
+    $response->getBody()->write($userId);
     return $response;
 });
 $app->get('/user/{id}', function (Request $request, Response $response, array $args) {
@@ -23,4 +30,3 @@ $app->get('/user/{id}', function (Request $request, Response $response, array $a
     return $response;
 });
 $app->run();
-?>
