@@ -15,7 +15,7 @@ $app->get('/', function (Request $request, Response $response) {
 });
 
 $app->get('/user', function (Request $request, Response $response) {
-    $response->getBody()->write("Саламалеку малек шалям кутакбасс");
+    $response->getBody()->write("Сайт работает");
     return $response;
 });
 $app->post('/user/{id}', function (Request $request, Response $response) {
@@ -26,7 +26,7 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
 });
 $app->get('/user/{id}', function (Request $request, Response $response, array $args) {
     $userid = $args['id'];
-    $response->getBody()->write("Саламалеку малек шалям кутакбасс " . $userid);
+    $response->getBody()->write("Ваш id:" . $userid);
     return $response;
 });
 $app->run();
