@@ -4,5 +4,5 @@ If you want to run the file, paste this into the command line: php -S localhost:
 
 IMPORTANT: You must run this in the directory where the main.php file is located.!!!!!
 
-To run this program, you need to download composer and write composer install in the directory console.
+To run this program, you need to download composer and write "composer install" in the directory console.
 https://getcomposer.org/
