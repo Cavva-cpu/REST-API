@@ -1,6 +1,14 @@
-{
-    "PC": {
+[
+    {
         "login": "alo1211",
-        "password": "jopa"
+        "password": "1211"
+    },
+    {
+        "login": "alo1211",
+        "password": "1211"
+    },
+    {
+        "login": "alo1211",
+        "password": "1211"
     }
-}
+]

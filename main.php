@@ -12,23 +12,44 @@ $app->get('/user', function (Request $request, Response $response) {
     $response->getBody()->write("Сайт работает");
     return $response;
 });
+
+
+
 $app->post('/user/{id}', function (Request $request, Response $response) {
     $data_request = $request->getQueryParams();
+
     $file = 'repository/Reposytory.json';
+
     if (file_exists($file)) {
         $json_string = file_get_contents($file);
         $data = json_decode($json_string, true);
-    };
+    } 
+        
     $new_item = [
         'login' => $data_request['login'],
         'password' => $data_request['password']
     ];
-    $data['PC'] = $new_item;
+    
+    try
+    {
+        $data[] = $new_item;
+
+    }
+    catch(TypeError $ex)
+    {
+        $data['PC'] = $new_item;
+    }
+    
     $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
     file_put_contents($file, $updated_json);
+
     $response->getBody()->write("Готово");
+
     return $response;
 });
+
+
 
 
 $app->run();
