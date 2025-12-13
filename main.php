@@ -32,7 +32,7 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
     $new_item = [
         'note' => $data_request['note']
     ];
-    
+    $test = 0;
     $data[] = $new_item;
     
     $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
