@@ -21,7 +21,6 @@ $app->get('/user', function (Request $request, Response $response) {
 
 $app->post('/user/{id}', function (Request $request, Response $response) {
     $data_request = $request->getQueryParams();
-
     $file = 'repository/Reposytory.json';
 
     if (file_exists($file)) {
@@ -30,12 +29,16 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
     }
         
     $new_item = [
-        'note' => $data_request['note']
+        'note' => $data_request['note'],
     ];
-    $test = 0;
     $data[] = $new_item;
-    
-    $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    foreach($data as $index => $note){
+        $data_with_id[] = array(
+            'id' => $index + 1,
+            'note' => $note['note']
+        );
+    }
+    $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     file_put_contents($file, $updated_json);
 
