@@ -30,16 +30,8 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
         'password' => $data_request['password']
     ];
     
-    try
-    {
-        $data[] = $new_item;
+    $data[] = $new_item;
 
-    }
-    catch(TypeError $ex)
-    {
-        $data['PC'] = $new_item;
-    }
-    
     $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
 
     file_put_contents($file, $updated_json);
