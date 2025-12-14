@@ -9,7 +9,7 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 
 $app->get('/user', function (Request $request, Response $response) {
-    $file = 'repository/Reposytory.json';
+    $file = 'repository/Repository.json';
     if (file_exists($file)){
         $json_string = file_get_contents($file);
     }
@@ -21,7 +21,7 @@ $app->get('/user', function (Request $request, Response $response) {
 
 $app->post('/user/{id}', function (Request $request, Response $response) {
     $data_request = $request->getQueryParams();
-    $file = 'repository/Reposytory.json';
+    $file = 'repository/Repository.json';
 
     if (file_exists($file)) {
         $json_string = file_get_contents($file);
@@ -47,7 +47,20 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
     return $response;
 });
 
+$app->delete('/user/{id}', function(Request $request, Response $response, array $args){
+    $note_id = $args['id'];
+    $file = 'repository/Repository.json';
+    if (file_exists($file)){
+        $json_srting = file_get_contents($file);
+        $data = json_decode($json_srting, true);
+    }
 
+    unset($data[$note_id - 1]);
+    $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    file_put_contents($file, $updated_json);
+    $response->getBody()->write('готова');
+    return $response;
+});
 
 
 $app->run();
