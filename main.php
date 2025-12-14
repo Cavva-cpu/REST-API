@@ -58,9 +58,26 @@ $app->delete('/user/{id}', function(Request $request, Response $response, array 
     unset($data[$note_id - 1]);
     $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     file_put_contents($file, $updated_json);
-    $response->getBody()->write('готова');
+    $response->getBody()->write('Заметка Успешно Удалена');
     return $response;
 });
 
+$app->put('/user/{id}', function(Request $request, Response $response, array $args){
+    $note_id = $args['id'];
+    $file = 'repository/Repository.json';
+    $data_request = $request->getQueryParams();
+    if (file_exists($file)){
+        $json_srting = file_get_contents($file);
+        $data = json_decode($json_srting, true);
+    }
+    
+
+    $data[$note_id - 1]['note'] = $data_request['note'];
+
+    $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    file_put_contents($file, $updated_json);
+    $response->getBody()->write('Заметка Успешно Заменена');
+    return $response;
+});
 
 $app->run();
