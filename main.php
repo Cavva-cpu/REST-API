@@ -2,16 +2,17 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-include 'repository/RepositoryJSON.php';
-require __DIR__ . '/../REST API/vendor/autoload.php';
+require_once 'repository/RepositoryJSON.php';
+use methods\RepositoryJSON;
+require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 
 $app->get('/user', function (Request $request, Response $response) {
     $data_request = $request->getQueryParams();
-    $data  = Get($data_request);
-    $response->getBody()->write($data);
+    $data = new RepositoryJSON();
+    $response->getBody()->write($data->Get($data_request));
     return $response;
 });
 
@@ -20,8 +21,8 @@ $app->get('/user', function (Request $request, Response $response) {
 $app->post('/user/{id}', function (Request $request, Response $response) {
     $file = 'repository/Repository.json';
     $data_request = $request->getQueryParams();
-    $data = Post($data_request);
-    file_put_contents($file,$data);
+    $data = new RepositoryJSON();
+    file_put_contents($file,$data->Post($data_request));
     $response->getBody()->write("Записка была успешно записана!");
     return $response;
 });
@@ -29,8 +30,8 @@ $app->post('/user/{id}', function (Request $request, Response $response) {
 $app->delete('/user/{id}', function(Request $request, Response $response, array $args){
     $note_id = $args['id'];
     $file = 'repository/Repository.json';
-    $data = delete($note_id);
-    file_put_contents($file, $data);
+    $data = new RepositoryJSON();
+    file_put_contents($file, $data->delete($note_id));
     $response->getBody()->write('Заметка Успешно Удалена');
     return $response;
 });
@@ -39,8 +40,8 @@ $app->put('/user/{id}', function(Request $request, Response $response, array $ar
     $note_id = $args['id'];
     $file = 'repository/Repository.json';
     $data_request = $request->getQueryParams();
-    $data = Put($data_request, $note_id);
-    file_put_contents($file, $data);
+    $data = new RepositoryJSON();
+    file_put_contents($file, $data->Put($data_request,$note_id));
     $response->getBody()->write('Заметка Успешно Заменена');
     return $response;
 });
