@@ -2,5 +2,11 @@
     "require": {
         "slim/slim": "4.*",
         "slim/psr7": "^1.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Services\\RepositoryMethod\\": "Services/Repository/",
+            "Services\\RepositoryInterface\\": "Services/Repository/"
+        }
     }
 }

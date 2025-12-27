@@ -1,15 +1,23 @@
 <?php
-use RepositoryInterface;
-
-class A implements RepositoryInterface
+namespace Services\RepositoryMethod;
+use Services\RepositoryInterface\RepositoryInterface;
+class JsonRepository implements RepositoryInterface
 {
+    const file = '\REST API\Repository.json';
     public function Get()
     {
-        if (file_exists(file)) {
+        if (file_exists(file))
+        {
             $json_string = file_get_contents(file);
+        }
+
+        if ($json_string === false) 
+        {
+                $json_string = "File no have data";
         }
         return $json_string;
     }
+
     public function Create($data_request)
     {
         if (file_exists(file)) {
@@ -30,6 +38,7 @@ class A implements RepositoryInterface
         $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         return $updated_json;
     }
+
     public function Put($data_request, $note_id)
     {
         if (file_exists(file)) {
@@ -42,6 +51,7 @@ class A implements RepositoryInterface
         $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         return $updated_json;
     }
+
     public function Delete($note_id)
     {
         if (file_exists(file)) {
