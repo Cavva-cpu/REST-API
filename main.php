@@ -40,7 +40,8 @@ $app->put('/user/{id}', function (Request $request, Response $response, array $a
     $data = new JsonRepository();
     file_put_contents(file, $data->Put($data_request, $note_id));
     $response->getBody()->write('Заметка Успешно Заменена');
-    return $response;
+    return $response; 
+    
 });
 
 $app->run();
