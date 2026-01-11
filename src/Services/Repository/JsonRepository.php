@@ -11,9 +11,9 @@ class JsonRepository implements RepositoryInterface
             $json_string = file_get_contents(file);
         }
 
-        if ($json_string === false) 
+        else
         {
-                $json_string = "File no have data";
+            $json_string = "File no have data";
         }
         return $json_string;
     }
