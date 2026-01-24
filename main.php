@@ -2,44 +2,39 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-use Services\RepositoryMethod\JsonRepository;
+use Services\Repository\JsonRepository;
 require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 const file = 'Repository.json';
-
+$repository = new JsonRepository();
 
 $app->get('/user', function (Request $request,Response $response) {
-    $method = new JsonRepository();
-    $response->getBody()->write($method->Get());
+    global $repository;
+    $response->getBody()->write($repository->GetAllNotes());
     return $response;
 });
 
-
-
 $app->post('/user', function (Request $request, Response $response) {
-    $data_request = $request->getQueryParams();
-    $data = new JsonRepository();
-    file_put_contents(file, $data->Create($data_request));
-    $response->getBody()->write("Записка была успешно записана!");
+    $dataRequest = $request->getQueryParams();
+    global $repository;
+    $response->getBody()->write($repository->CreateNote($dataRequest));
     return $response;
 });
 
 $app->delete('/user/{id}', function (Request $request, Response $response, array $args) {
-    $note_id = $args['id'];
-    $data = new JsonRepository();
-    file_put_contents(file, $data->Delete($note_id));
-    $response->getBody()->write('Заметка Успешно Удалена');
+    global $repository;
+    $noteId = $args['id'];
+    $response->getBody()->write($repository->DeleteNote($noteId));
     return $response;
 });
 
 $app->put('/user/{id}', function (Request $request, Response $response, array $args) {
-    $note_id = $args['id'];
-    $data_request = $request->getQueryParams();
-    $data = new JsonRepository();
-    file_put_contents(file, $data->Put($data_request, $note_id));
-    $response->getBody()->write('Заметка Успешно Заменена');
+    $noteId = $args['id'];
+    $dataRequest = $request->getQueryParams();
+    global $repository;
+    $response->getBody()->write($repository->PutNote($dataRequest, $noteId));
     return $response; 
     
 });

@@ -5,8 +5,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Services\\RepositoryMethod\\": "src/Services/Repository/",
-            "Services\\RepositoryInterface\\": "src/Services/Repository/"
+            "Services\\Repository\\": "src/Services/Repository/",
+            "Services\\RepositoryInterface\\": "src/Services/RepositoryInterface/"
         }
     }
 }

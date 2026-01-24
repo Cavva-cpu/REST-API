@@ -1,24 +1,20 @@
 <?php
-namespace Services\RepositoryMethod;
+namespace Services\Repository;
 use Services\RepositoryInterface\RepositoryInterface;
 class JsonRepository implements RepositoryInterface
 {
-    const file = '\REST API\Repository.json';
-    public function Get()
+    const file = '\REST API\Repository.json' ;
+    public function GetAllNotes():string
     {
         if (file_exists(file))
         {
-            $json_string = file_get_contents(file);
+            $jsonString = file_get_contents(file);
         }
 
-        else
-        {
-            $json_string = "File no have data";
-        }
-        return $json_string;
+        return $jsonString;
     }
 
-    public function Create($data_request)
+    public function CreateNote($dataRequest):string
     {
         if (file_exists(file)) {
             $json_string = file_get_contents(file);
@@ -26,7 +22,7 @@ class JsonRepository implements RepositoryInterface
         }
 
         $data[] = $new_item = [
-            'note' => $data_request['note'],
+            'note' => $dataRequest['note'],
         ];
         foreach ($data as $index => $note) {
             $data_with_id[] = array(
@@ -36,32 +32,36 @@ class JsonRepository implements RepositoryInterface
         }
 
         $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        return $updated_json;
+        file_put_contents(file, $updated_json);
+        return "Записка была успешно добавленна!";
     }
 
-    public function Put($data_request, $note_id)
+    public function PutNote($dataRequest, $noteId):string
     {
         if (file_exists(file)) {
-            $json_srting = file_get_contents(file);
-            $data = json_decode($json_srting, true);
+            $json_string = file_get_contents(file);
+            $data = json_decode($json_string, true);
         }
 
-        $data[$note_id - 1]['note'] = $data_request['note'];
+        $data[$noteId - 1]['note'] = $dataRequest['note'];
 
         $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        return $updated_json;
+        file_put_contents(file, $updated_json);
+        return "Записка была успешно обновлена!";
     }
 
-    public function Delete($note_id)
+    public function DeleteNote($noteId):string
     {
         if (file_exists(file)) {
-            $json_srting = file_get_contents(file);
-            $data = json_decode($json_srting, true);
+            $json_string = file_get_contents(file);
+            $data = json_decode($json_string, true);
         }
 
-        unset($data[$note_id - 1]);
+        unset($data[$noteId - 1]);
         $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        return $updated_json;
+        file_put_contents(file, $updated_json);
+        return "Записка была успешно удалена!";
+
     }
 
 }
