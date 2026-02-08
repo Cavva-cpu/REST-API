@@ -6,7 +6,8 @@
     "autoload": {
         "psr-4": {
             "Services\\Repository\\": "src/Services/Repository/",
-            "Services\\RepositoryInterface\\": "src/Services/RepositoryInterface/"
+            "Services\\RepositoryInterface\\": "src/Services/RepositoryInterface/",
+            "Dto\\": "dto/"
         }
     }
 }

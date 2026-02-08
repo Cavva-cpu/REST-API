@@ -15,7 +15,7 @@ interface RepositoryInterface
      * @param $dataRequest
      * @return string response with operation status
      */
-    public function CreateNote($dataRequest):string;
+    public function CreateNote($repositoryDto):void;
 
 
     /**
@@ -25,7 +25,7 @@ interface RepositoryInterface
      * @param $noteId
      * @return string response with operation status
      */
-    public function PutNote($dataRequest, $noteId):string;
+    public function PutNote($repositoryDto):string;
 
 
     /**
@@ -34,5 +34,5 @@ interface RepositoryInterface
      * @param $noteId
      * @return string response with operation status
     */
-    public function DeleteNote($noteId):string;
+    public function DeleteNote($repositoryDto):string;
 }
