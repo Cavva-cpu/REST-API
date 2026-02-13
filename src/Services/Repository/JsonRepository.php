@@ -67,7 +67,16 @@ class JsonRepository implements RepositoryInterface
         }
         $noteid = $repositoryDto->id;
         unset($data[$noteid - 1]);
-        $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+
+        if(isset($data)){
+            foreach ($data as $index => $note) {
+                $data_with_id[] = array(
+                    'id' => $index + 1,
+                    'note' => $note['note'],
+                );
+            }
+        }
+        $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         file_put_contents(file, $updated_json);
         return "Записка была успешно удалена!";
 
