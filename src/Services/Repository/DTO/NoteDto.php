@@ -1,6 +1,6 @@
 <?php
-namespace Dto;
-class repositoryDto
+namespace Dto\NoteDto;
+class NoteDto
 {
     public ?string $note;
     public ?int $id = null;

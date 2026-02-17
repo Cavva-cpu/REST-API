@@ -2,18 +2,18 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-use Services\Repository\JsonRepository;
-use Dto\repositoryDto;
+use Services\Repository\JsonNoteRepository;
+use Dto\NoteDto\NoteDto;
 require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 const file = 'Repository.json';
-$repository = new JsonRepository();
+$repository = new JsonNoteRepository();
 $app->get('/user', function (Request $request,Response $response)
 {
     global $repository;
-    $response->getBody()->write($repository->getAllNotes());
+    $response->getBody()->write(json_encode($repository->getAllNotes()));
     return $response;
 });
 
@@ -21,9 +21,8 @@ $app->post('/user', function (Request $request, Response $response)
 {
     global $repository;
     $dataRequest = $request->getQueryParams();
-    $repositoryDto = new repositoryDto($dataRequest['note'],null);
-    $repository->createNote($repositoryDto);
-    $response->getBody()->write("Ваша записка была успешно добавленна");
+    $repositoryDto = new NoteDto($dataRequest['note'],null);
+    $response->getBody()->write(json_encode($repository->createNote($repositoryDto->note)));
     return $response;
 });
 
@@ -31,9 +30,8 @@ $app->delete('/user/{id}', function (Request $request, Response $response, array
 {
     global $repository;
     $noteId = $args['id'];
-    $repositoryDto = new repositoryDto(null,$noteId);
-    $repository->deleteNote($repositoryDto);
-    $response->getBody()->write("Ваша записка была успешно удалена");
+    $repositoryDto = new noteDto(null,$noteId);
+    $response->getBody()->write(json_encode($repository->deleteNote($repositoryDto->id)));
     return $response;
 });
 
@@ -42,9 +40,8 @@ $app->put('/user/{id}', function (Request $request, Response $response, array $a
     global $repository;
     $noteId = $args['id'];
     $dataRequest = $request->getQueryParams();
-    $repositoryDto = new repositoryDto($dataRequest['note'], $noteId);
-    $repository->putNote($repositoryDto);
-    $response->getBody()->write("Ваша записка была успешно обнавлена");
+    $repositoryDto = new noteDto($dataRequest['note'], $noteId);
+    $response->getBody()->write(json_encode($repository->putNote($repositoryDto->id,$repositoryDto->note)));
     return $response; 
     
 });

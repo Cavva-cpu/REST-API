@@ -1,31 +1,29 @@
 <?php
 namespace Services\Repository;
-use Services\RepositoryInterface\RepositoryInterface;
-use Dto\repositoryDto;
-class JsonRepository implements RepositoryInterface
+class JsonNoteRepository implements NoteRepositoryInterface
 {
-    const string file = '\REST API\Repository.json';
-    public function getAllNotes():string
+    const string FILE_PATH = 'Repository.json';
+    public function getAllNotes():array
     {
-        if (file_exists(file))
+        if (file_exists(self::FILE_PATH))
         {
-            $jsonString = file_get_contents(file);
+            $jsonString = file_get_contents(self::FILE_PATH);
         }
 
-        return $jsonString;
+        return json_decode($jsonString);
     }
 
-    public function createNote($repositoryDto):void
+    public function createNote(string $note):array
     {
-        if (file_exists(file)) {
-            $json_string = file_get_contents(file);
+        if (file_exists(self::FILE_PATH)) {
+            $json_string = file_get_contents(self::FILE_PATH);
             $data = json_decode($json_string, true);
         }
 
 
 
         $data[] = $new_item = [
-            'note' => $repositoryDto->note,
+            'note' => $note,
         ];
         if(isset($data)){
             foreach ($data as $index => $note) {
@@ -37,35 +35,35 @@ class JsonRepository implements RepositoryInterface
         }
 
 
-
+        $data_array = end($data_with_id);
         $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        file_put_contents(file, $updated_json);
-
+        file_put_contents(self::FILE_PATH , $updated_json);
+        return $data_array;
 
     }
 
-    public function putNote($repositoryDto):string
+    public function putNote(int $id , string $note):array
     {
-        if (file_exists(file)) {
+        if (file_exists(self::FILE_PATH)) {
             $json_string = file_get_contents(file);
             $data = json_decode($json_string, true);
         }
-        $noteid = $repositoryDto->id;
-        $note = $repositoryDto->note;
-        $data[$noteid - 1]['note'] = $note;
-
+        $noteid = $id;
+        $noteText = $note;
+        $data[$noteid - 1]['note'] = $noteText;
+        $data_array = $data[$noteid - 1];
         $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        file_put_contents(file, $updated_json);
-        return "Записка была успешно обновлена!";
+        file_put_contents(self::FILE_PATH, $updated_json);
+        return $data_array;
     }
 
-    public function deleteNote($repositoryDto):string
+    public function deleteNote(int $noteId):bool
     {
-        if (file_exists(file)) {
+        if (file_exists(self::FILE_PATH)) {
             $json_string = file_get_contents(file);
             $data = json_decode($json_string, true);
         }
-        $noteid = $repositoryDto->id;
+        $noteid = $noteId;
         unset($data[$noteid - 1]);
 
         if(isset($data)){
@@ -76,9 +74,10 @@ class JsonRepository implements RepositoryInterface
                 );
             }
         }
+        $code_done = true;
         $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        file_put_contents(file, $updated_json);
-        return "Записка была успешно удалена!";
+        file_put_contents(self::FILE_PATH, $updated_json);
+        return $code_done;
 
     }
 
