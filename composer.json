@@ -5,8 +5,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Services\\Repository\\": "src/Services/Repository/",
-            "Dto\\NoteDto\\": "src/Services/Repository/DTO/"
+            "Services\\NoteRepository\\": "src/Services/NoteRepository/",
+            "Dto\\NoteDto\\": "src/Services/NoteRepository/DTO/"
         }
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace Services\Repository;
+namespace Services\NoteRepository;
 use Dto\NoteDto;
 interface NoteRepositoryInterface
 {
@@ -7,7 +7,7 @@ interface NoteRepositoryInterface
      * Get note
      * @return array
      */
-    public function GetAllNotes():array;
+    public function GetAllNotes():array|string;
 
 
     /**
@@ -16,7 +16,7 @@ interface NoteRepositoryInterface
      * @param $dataRequest
      * @return array
      */
-    public function CreateNote(string $note):array;
+    public function CreateNote(string $note):array|string;
 
 
     /**
@@ -25,7 +25,7 @@ interface NoteRepositoryInterface
      * @param $dataRequest
      * @param $noteId
      */
-    public function PutNote(int $id , string $note):array;
+    public function PutNote(int $id , string $note):array|string;
 
 
     /**
@@ -34,5 +34,5 @@ interface NoteRepositoryInterface
      * @param $noteId
      * @return bool
     */
-    public function DeleteNote(int $noteId):bool;
+    public function DeleteNote(int $noteId):bool|string;
 }

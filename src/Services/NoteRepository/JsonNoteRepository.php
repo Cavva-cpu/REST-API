@@ -1,25 +1,30 @@
 <?php
-namespace Services\Repository;
+namespace Services\NoteRepository;
 class JsonNoteRepository implements NoteRepositoryInterface
 {
     const string FILE_PATH = 'Repository.json';
-    public function getAllNotes():array
+    public function getAllNotes():array|string
     {
         if (file_exists(self::FILE_PATH))
         {
             $jsonString = file_get_contents(self::FILE_PATH);
         }
+        else{
+            return "Repository.json file doesn't exist";
+        }
 
         return json_decode($jsonString);
     }
 
-    public function createNote(string $note):array
+    public function createNote(string $note):array|string
     {
         if (file_exists(self::FILE_PATH)) {
             $json_string = file_get_contents(self::FILE_PATH);
             $data = json_decode($json_string, true);
         }
-
+        else{
+            return "Repository.json file doesn't exist";
+        }
 
 
         $data[] = $new_item = [
@@ -42,11 +47,14 @@ class JsonNoteRepository implements NoteRepositoryInterface
 
     }
 
-    public function putNote(int $id , string $note):array
+    public function putNote(int $id , string $note):array|string
     {
         if (file_exists(self::FILE_PATH)) {
             $json_string = file_get_contents(file);
             $data = json_decode($json_string, true);
+        }
+        else{
+            return "Repository.json file doesn't exist";
         }
         $noteid = $id;
         $noteText = $note;
@@ -57,11 +65,14 @@ class JsonNoteRepository implements NoteRepositoryInterface
         return $data_array;
     }
 
-    public function deleteNote(int $noteId):bool
+    public function deleteNote(int $noteId):bool|string
     {
         if (file_exists(self::FILE_PATH)) {
             $json_string = file_get_contents(file);
             $data = json_decode($json_string, true);
+        }
+        else{
+            return "Repository.json file doesn't exist";
         }
         $noteid = $noteId;
         unset($data[$noteid - 1]);
