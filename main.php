@@ -10,14 +10,14 @@ $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
 const file = 'Repository.json';
 $repository = new JsonNoteRepository();
-$app->get('/user', function (Request $request,Response $response)
+$app->get('/', function (Request $request,Response $response)
 {
     global $repository;
     $response->getBody()->write(json_encode($repository->getAllNotes()));
     return $response;
 });
 
-$app->post('/user', function (Request $request, Response $response)
+$app->post('/', function (Request $request, Response $response)
 {
     global $repository;
     $dataRequest = $request->getQueryParams();
@@ -26,7 +26,7 @@ $app->post('/user', function (Request $request, Response $response)
     return $response;
 });
 
-$app->delete('/user/{id}', function (Request $request, Response $response, array $args)
+$app->delete('/{id}', function (Request $request, Response $response, array $args)
 {
     global $repository;
     $noteId = $args['id'];
@@ -35,7 +35,7 @@ $app->delete('/user/{id}', function (Request $request, Response $response, array
     return $response;
 });
 
-$app->put('/user/{id}', function (Request $request, Response $response, array $args)
+$app->put('/{id}', function (Request $request, Response $response, array $args)
 {
     global $repository;
     $noteId = $args['id'];
