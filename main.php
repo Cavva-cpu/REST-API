@@ -8,7 +8,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
-const file = 'Repository.json';
+
 $repository = new JsonNoteRepository();
 $app->get('/', function (Request $request,Response $response)
 {

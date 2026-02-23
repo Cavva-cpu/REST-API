@@ -50,7 +50,7 @@ class JsonNoteRepository implements NoteRepositoryInterface
     public function putNote(int $id , string $note):array|string
     {
         if (file_exists(self::FILE_PATH)) {
-            $json_string = file_get_contents(file);
+            $json_string = file_get_contents(self::FILE_PATH);
             $data = json_decode($json_string, true);
         }
         else{
@@ -68,7 +68,7 @@ class JsonNoteRepository implements NoteRepositoryInterface
     public function deleteNote(int $noteId):bool|string
     {
         if (file_exists(self::FILE_PATH)) {
-            $json_string = file_get_contents(file);
+            $json_string = file_get_contents(self::FILE_PATH);
             $data = json_decode($json_string, true);
         }
         else{
