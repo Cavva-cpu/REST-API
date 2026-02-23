@@ -2,7 +2,7 @@
 namespace Services\NoteRepository;
 class JsonNoteRepository implements NoteRepositoryInterface
 {
-    const string FILE_PATH = 'Repository.json';
+    private const string FILE_PATH = 'Repository.json';
     public function getAllNotes():array|string
     {
         if (file_exists(self::FILE_PATH))
