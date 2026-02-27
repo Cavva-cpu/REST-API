@@ -1,5 +1,5 @@
 <?php
-namespace Services\NoteRepository;
+namespace Services\JsonNoteRepository;
 class JsonNoteRepository implements NoteRepositoryInterface
 {
     private const string FILE_PATH = 'Repository.json';

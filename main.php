@@ -2,7 +2,7 @@
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
-use Services\NoteRepository\JsonNoteRepository;
+use Services\JsonNoteRepository\JsonNoteRepository;
 use Dto\NoteDto\NoteDto;
 require __DIR__ . '/vendor/autoload.php';
 
@@ -47,4 +47,3 @@ $app->put('/{id}', function (Request $request, Response $response, array $args)
 });
 
 $app->run();
-// убейте меня пожалуйста

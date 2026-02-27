@@ -1,5 +1,5 @@
 <?php
-namespace Services\NoteRepository;
+namespace Services\JsonNoteRepository;
 use Dto\NoteDto;
 interface NoteRepositoryInterface
 {
