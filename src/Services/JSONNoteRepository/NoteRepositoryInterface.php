@@ -5,7 +5,7 @@ interface NoteRepositoryInterface
 {
     /**
      * Get note
-     * @return array
+     * @return array|string
      */
     public function GetAllNotes():array|string;
 
@@ -13,8 +13,8 @@ interface NoteRepositoryInterface
     /**
      * Create note
      *
-     * @param $dataRequest
-     * @return array
+     * @param $note
+     * @return array|string
      */
     public function CreateNote(string $note):array|string;
 
@@ -22,8 +22,9 @@ interface NoteRepositoryInterface
     /**
      * Put note
      *
-     * @param $dataRequest
-     * @param $noteId
+     * @param $id
+     * @param $note
+     * @return array|string
      */
     public function PutNote(int $id , string $note):array|string;
 
@@ -32,7 +33,7 @@ interface NoteRepositoryInterface
     * Delete note
      *
      * @param $noteId
-     * @return bool
+     * @return bool|string
     */
     public function DeleteNote(int $noteId):bool|string;
 }
