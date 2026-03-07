@@ -3,27 +3,27 @@ namespace Services\NoteRepository;
 class JsonNoteRepository implements NoteRepositoryInterface
 {
     private const string FILE_PATH = 'Repository.json';
-    public function getAllNotes():array|string
+    public function getAllNotes():array
     {
         if (file_exists(self::FILE_PATH))
         {
             $jsonString = file_get_contents(self::FILE_PATH);
         }
         else{
-            return "Repository.json file doesn't exist";
+            throw new \Exception("File Repositroy.json doesn't exist");
         }
 
         return json_decode($jsonString);
     }
 
-    public function createNote(string $note):array|string
+    public function createNote(string $note):array
     {
         if (file_exists(self::FILE_PATH)) {
-            $json_string = file_get_contents(self::FILE_PATH);
-            $data = json_decode($json_string, true);
+            $jsonString = file_get_contents(self::FILE_PATH);
+            $data = json_decode($jsonString, true);
         }
         else{
-            return "Repository.json file doesn't exist";
+            throw new \Exception("File Repositroy.json doesn't exist");
         }
 
 
@@ -47,48 +47,45 @@ class JsonNoteRepository implements NoteRepositoryInterface
 
     }
 
-    public function putNote(int $id , string $note):array|string
+    public function putNote(int $id , string $note):array
     {
         if (file_exists(self::FILE_PATH)) {
-            $json_string = file_get_contents(self::FILE_PATH);
-            $data = json_decode($json_string, true);
+            $jsonString = file_get_contents(self::FILE_PATH);
+            $data = json_decode($jsonString, true);
         }
         else{
-            return "Repository.json file doesn't exist";
+            throw new \Exception("File Repositroy.json doesn't exist");
         }
-        $noteid = $id;
-        $noteText = $note;
-        $data[$noteid - 1]['note'] = $noteText;
-        $data_array = $data[$noteid - 1];
+        $data[$id - 1]['note'] = $note;
+        $data_array = $data[$id - 1];
         $updated_json = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         file_put_contents(self::FILE_PATH, $updated_json);
         return $data_array;
     }
 
-    public function deleteNote(int $noteId):bool|string
+    public function deleteNote(int $noteId):bool
     {
         if (file_exists(self::FILE_PATH)) {
-            $json_string = file_get_contents(self::FILE_PATH);
-            $data = json_decode($json_string, true);
+            $jsonString = file_get_contents(self::FILE_PATH);
+            $data = json_decode($jsonString, true);
         }
         else{
-            return "Repository.json file doesn't exist";
+            throw new \Exception("File Repositroy.json doesn't exist");
         }
-        $noteid = $noteId;
-        unset($data[$noteid - 1]);
+        unset($data[$noteId - 1]);
 
         if(isset($data)){
             foreach ($data as $index => $note) {
-                $data_with_id[] = array(
+                $dataWithId[] = array(
                     'id' => $index + 1,
                     'note' => $note['note'],
                 );
             }
         }
-        $code_done = true;
-        $updated_json = json_encode($data_with_id, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
-        file_put_contents(self::FILE_PATH, $updated_json);
-        return $code_done;
+
+        $updatedJson = json_encode($dataWithId, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        file_put_contents(self::FILE_PATH, $updatedJson);
+        return true;
 
     }
 
