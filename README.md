@@ -7,3 +7,10 @@ IMPORTANT: You must run this command in the directory terminal where the main.ph
 
 To run this program, you need to download composer and write "composer install" in the directory terminal.
 https://getcomposer.org/
+
+Use this in your database:
+CREATE TABLE notes (
+id SERIAL PRIMARY KEY,
+name text,
+done bool
+);
