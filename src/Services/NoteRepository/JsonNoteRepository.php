@@ -5,15 +5,20 @@ class JsonNoteRepository implements NoteRepositoryInterface
     private const string FILE_PATH = 'Repository.json';
     public function getAllNotes():array
     {
+
         if (file_exists(self::FILE_PATH))
         {
             $jsonString = file_get_contents(self::FILE_PATH);
+            $noteArray = json_decode($jsonString, true);
+            $return = array_map(function (array $notes) {
+                return "note {$notes['id']}: {$notes['note']}";
+            } , $noteArray);
+            return $return;
         }
-        else{
+        else
+        {
             throw new \Exception("File Repositroy.json doesn't exist");
         }
-
-        return json_decode($jsonString);
     }
 
     public function createNote(string $note):array
@@ -64,17 +69,16 @@ class JsonNoteRepository implements NoteRepositoryInterface
     }
 
     public function deleteNote(int $noteId):bool
-    {
+    {   try {
         if (file_exists(self::FILE_PATH)) {
             $jsonString = file_get_contents(self::FILE_PATH);
             $data = json_decode($jsonString, true);
-        }
-        else{
+        } else {
             throw new \Exception("File Repositroy.json doesn't exist");
         }
         unset($data[$noteId - 1]);
 
-        if(isset($data)){
+        if (isset($data)) {
             foreach ($data as $index => $note) {
                 $dataWithId[] = array(
                     'id' => $index + 1,
@@ -87,6 +91,10 @@ class JsonNoteRepository implements NoteRepositoryInterface
         file_put_contents(self::FILE_PATH, $updatedJson);
         return true;
 
+    }catch (\Exception $exception){
+        echo $exception->getMessage();
+        return false;
+    }
     }
 
 }

@@ -1,13 +1,13 @@
 <?php
 namespace Services\NoteRepository;
-use Dto\NoteDto;
+
 interface NoteRepositoryInterface
 {
     /**
      * Get note
-     * @return array
+     *
      */
-    public function getAllNotes():array;
+    public  function getAllNotes():array;
 
 
     /**
