@@ -9,10 +9,10 @@ use Services\NoteRepository\NoteRepositoryInterface;
 class PostgresqlNoteRepository implements NoteRepositoryInterface
 {
 
-    private string $dbName = 'notesdb';
+    private string $dbName = 'YOUR_DATABASE_NAME';
     public  function getAllNotes(): array
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=postgres password=1";
+        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
@@ -30,7 +30,7 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
 
     public function createNote(string $note): array
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=postgres password=1";
+        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
@@ -44,7 +44,7 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
 
     public function putNote(int $id, string $note): array
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=postgres password=1";
+        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
@@ -58,7 +58,7 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
 
     public function deleteNote(int $noteId): bool
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=postgres password=1";
+        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
