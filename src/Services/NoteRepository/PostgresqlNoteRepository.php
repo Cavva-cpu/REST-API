@@ -58,7 +58,7 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
 
     public function deleteNote(int $noteId): bool
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
+        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR__LOGIN password=YOUR_PASSWORD";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
