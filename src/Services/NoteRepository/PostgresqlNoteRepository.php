@@ -9,10 +9,23 @@ use Services\NoteRepository\NoteRepositoryInterface;
 class PostgresqlNoteRepository implements NoteRepositoryInterface
 {
 
-    private string $dbName = 'YOUR_DATABASE_NAME';
+    private string $dbName;
+    private string $port;
+    private string $dbHost;
+    private string $dbUser;
+    private string $dbPass;
+
+public function __construct() 
+{
+    $this->port = $_ENV['DB_PORT']; 
+    $this->dbUser = $_ENV['DB_USER']; 
+    $this->dbHost = $_ENV['DB_HOST']; 
+    $this->dbPass = $_ENV['DB_PASS']; 
+    $this->dbName = $_ENV['DB_NAME'];
+}
     public  function getAllNotes(): array
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
+        $dbh = "host=$this->dbHost port=$this->port dbname=$this->dbName user=$this->dbUser password=$this->dbPass";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
@@ -28,23 +41,23 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
     }
 
 
-    public function createNote(string $note): array
-    {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
+    public function createNote(string $note): array 
+    {        
+        $dbh = "host=$this->dbHost port=$this->port dbname=$this->dbName user=$this->dbUser password=$this->dbPass";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
             echo $e->getMessage();
         }
 
-        $migration = pg_query($conection, "INSERT INTO notes (note,done) values ('$note', true)");
+        $migration = pg_query($conection, "INSERT INTO notes (note,done) values ('$note', true");
         return $Note = pg_fetch_all($migration);
     }
 
 
     public function putNote(int $id, string $note): array
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR_LOGIN password=YOUR_PASSWORD";
+        $dbh = "host=$this->dbHost port=$this->port dbname=$this->dbName user=$this->dbUser password=$this->dbPass";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){
@@ -58,7 +71,7 @@ class PostgresqlNoteRepository implements NoteRepositoryInterface
 
     public function deleteNote(int $noteId): bool
     {
-        $dbh = "host=localhost port=5432 dbname={$this->dbName} user=YOUR__LOGIN password=YOUR_PASSWORD";
+        $dbh = "host=$this->dbHost port=$this->port dbname=$this->dbName user=$this->dbUser password=$this->dbPass";
         try {
             $conection = pg_connect($dbh);
         }catch (PDOException $e){

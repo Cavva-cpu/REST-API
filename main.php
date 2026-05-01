@@ -4,7 +4,11 @@ use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Factory\AppFactory;
 use Services\NoteRepository\JsonNoteRepository;
 use Services\NoteRepository\PostgresqlNoteRepository;
+use Dotenv\Dotenv;
 require __DIR__ . '/vendor/autoload.php';
+
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->safeload();
 
 $app = AppFactory::create();
 $app->addBodyParsingMiddleware();
